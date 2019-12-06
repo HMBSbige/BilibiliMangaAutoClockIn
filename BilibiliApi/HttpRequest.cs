@@ -8,7 +8,7 @@ namespace BilibiliApi
 {
 	public abstract class HttpRequest
 	{
-		private const string DefaultUserAgent = @"Mozilla/5.0 BiliComic/2.8.1";
+		private const string DefaultUserAgent = @"Mozilla/5.0 BiliComic/2.9.0";
 		private const int DefaultTimeout = 10000;
 
 		protected static async Task<string> GetAsync(string url)
