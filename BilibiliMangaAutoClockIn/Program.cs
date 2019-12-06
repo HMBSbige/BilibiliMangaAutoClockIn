@@ -4,7 +4,7 @@
 	{
 		private static void Main(string[] args)
 		{
-			AutoClockIn task = null;
+			AutoClockIn? task = null;
 			if (args.Length == 2)
 			{
 				task = new AutoClockIn(args[0], args[1]);
