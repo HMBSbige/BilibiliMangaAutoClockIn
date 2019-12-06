@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BilibiliApi
 {
@@ -44,6 +46,20 @@ namespace BilibiliApi
 			using var rsa = ReadKey(publicKey);
 			var cipherBytes = rsa.Encrypt(Encoding.UTF8.GetBytes(str), RSAEncryptionPadding.Pkcs1);
 			return Convert.ToBase64String(cipherBytes);
+		}
+
+		public static async Task<DateTime> GetCurrentTime()
+		{
+			try
+			{
+				var ipS = await Dns.GetHostAddressesAsync(@"cn.ntp.org.cn");
+				var ip = ipS.FirstOrDefault();
+				return Ntp.GetWebTime(new IPEndPoint(ip ?? throw new InvalidOperationException(), 123));
+			}
+			catch
+			{
+				return DateTime.UtcNow;
+			}
 		}
 	}
 }

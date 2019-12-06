@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BilibiliApi
 {
-	public class Clock : HttpRequest
+	public class Manga : HttpRequest
 	{
 		private const string BaseUri = @"https://manga.bilibili.com";
 

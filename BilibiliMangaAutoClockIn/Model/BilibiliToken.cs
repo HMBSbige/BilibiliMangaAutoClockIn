@@ -16,6 +16,9 @@ namespace BilibiliMangaAutoClockIn.Model
 		/// </summary>
 		public DateTime Expires;
 
+		public BilibiliToken()
+		{ }
+
 		public BilibiliToken(string json)
 		{
 			Parse(json);

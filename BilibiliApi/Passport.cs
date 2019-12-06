@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BilibiliApi
 {
-	public class LogIn : HttpRequest
+	public class Passport : HttpRequest
 	{
 		private const string BaseUri = @"https://passport.bilibili.com";
 

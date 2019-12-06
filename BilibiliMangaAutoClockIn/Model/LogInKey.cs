@@ -2,13 +2,13 @@
 
 namespace BilibiliMangaAutoClockIn.Model
 {
-	public class GetKey
+	public class LogInKey
 	{
 		public string Hash = @"";
 		public string Key = @"";
 		public int Code = -1;
 
-		public GetKey(string json)
+		public LogInKey(string json)
 		{
 			using var document = JsonDocument.Parse(json);
 			var root = document.RootElement;
