@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BilibiliMangaAutoClockIn", "BilibiliMangaAutoClockIn\BilibiliMangaAutoClockIn.csproj", "{455DE564-4B62-4834-9D29-4996A2EA5C68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BilibiliMangaAutoClockIn", "BilibiliMangaAutoClockIn\BilibiliMangaAutoClockIn.csproj", "{455DE564-4B62-4834-9D29-4996A2EA5C68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BilibiliApi", "BilibiliApi\BilibiliApi.csproj", "{4D2275A6-1723-45F1-861F-50EA81823327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BilibiliApi", "BilibiliApi\BilibiliApi.csproj", "{4D2275A6-1723-45F1-861F-50EA81823327}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{7A06AB4D-EEE3-4EC0-A84F-0D8EE7DEA45B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4D2275A6-1723-45F1-861F-50EA81823327}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2275A6-1723-45F1-861F-50EA81823327}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D2275A6-1723-45F1-861F-50EA81823327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A06AB4D-EEE3-4EC0-A84F-0D8EE7DEA45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A06AB4D-EEE3-4EC0-A84F-0D8EE7DEA45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A06AB4D-EEE3-4EC0-A84F-0D8EE7DEA45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A06AB4D-EEE3-4EC0-A84F-0D8EE7DEA45B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

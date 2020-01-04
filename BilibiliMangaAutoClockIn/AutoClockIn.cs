@@ -108,19 +108,40 @@ namespace BilibiliMangaAutoClockIn
 			return false;
 		}
 
-		private async Task<bool> ClockInTask()
+		private async Task Revoke()
 		{
-			if (!string.IsNullOrWhiteSpace(_token.AccessToken))
+			try
 			{
-				if (await ClockIn())
+				await Passport.Revoke(_token.AccessToken);
+			}
+			catch
+			{
+				// ignored
+			}
+		}
+
+		private async Task<bool> CheckToken()
+		{
+			var time = await GetExpireTime();
+			if (time <= DateTime.UtcNow)
+			{
+				Console.WriteLine($@"Token 过期（{time.AddHours(8)}），尝试刷新 Token");
+				if (await RefreshToken())
 				{
+					_token.Expires = await GetExpireTime();
+					Console.WriteLine($@"Token 有效期至 {_token.Expires.AddHours(8)}");
 					return true;
 				}
 			}
-			return await LogIn() && await ClockIn();
+			else
+			{
+				Console.WriteLine($@"Token 有效期至 {time.AddHours(8)}");
+				return true;
+			}
+			return false;
 		}
 
-		private async Task<DateTime> ExpireTime()
+		private async Task<DateTime> GetExpireTime()
 		{
 			try
 			{
@@ -143,7 +164,7 @@ namespace BilibiliMangaAutoClockIn
 				if (tokenInfo.Code == 0)
 				{
 					_token.Parse(json);
-					Console.WriteLine(@"Token 刷新成功");
+					Console.WriteLine($@"Token 刷新成功：{_token.AccessToken}");
 					return true;
 				}
 			}
@@ -155,13 +176,28 @@ namespace BilibiliMangaAutoClockIn
 			return false;
 		}
 
+		private async Task<bool> ClockInTask()
+		{
+			if (!string.IsNullOrWhiteSpace(_token.AccessToken))
+			{
+				if (await CheckToken() && await ClockIn())
+				{
+					return true;
+				}
+			}
+			if (!string.IsNullOrWhiteSpace(_token.AccessToken))
+			{
+				await Revoke();
+			}
+			return await LogIn() && await ClockIn();
+		}
+
 		public async Task StartAsync(int retryTime)
 		{
 			++retryTime;
 			while (true)
 			{
-				var i = 0;
-				for (; i < retryTime; ++i)
+				for (var i = 0; i < retryTime; ++i)
 				{
 					if (await ClockInTask())
 					{
@@ -175,24 +211,6 @@ namespace BilibiliMangaAutoClockIn
 					var delay = TimeSpan.FromSeconds(10);
 					Console.WriteLine($@"等待 {delay.TotalSeconds} 秒后重试：{i + 1}/{retryTime}");
 					await Task.Delay(delay);
-				}
-				if (i < retryTime)
-				{
-					var time = await ExpireTime();
-					if (time <= DateTime.UtcNow)
-					{
-						Console.WriteLine($@"Token 过期（{time.AddHours(8)}），重新登录");
-						await LogIn();
-					}
-					else if (time - DateTime.UtcNow < TimeSpan.FromDays(7))
-					{
-						Console.WriteLine($@"Token 即将过期（{time.AddHours(8)}），尝试刷新 Token");
-						if (await RefreshToken())
-						{
-							_token.Expires = await ExpireTime();
-							Console.WriteLine($@"Token 有效期至 {_token.Expires.AddHours(8)}");
-						}
-					}
 				}
 				var waitTime = TimeSpan.FromMilliseconds(await GetCountdown()).Add(TimeSpan.FromSeconds(1));
 				Console.WriteLine($@"等待 {waitTime:hh\:mm\:ss} 后执行");
